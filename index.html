@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="en"><head>
+	<meta charset='utf-8'>
+	<title>CSV to Array</title>
+	<link rel="stylesheet" type="text/css" href="../css/simple.css">
+
+	</head>
+	<body onkeypress="return checkSubmit(event)">
+		<h1>Create an Array from a CSV file</h1>
+		
+		<form action="/pvweb/tools/Csv2HtmlServlet" method="post"
+				enctype="multipart/form-data" onsubmit="return genHTML()">
+			<fieldset><legend>Select a CSV file to process</legend>
+				<label for="csvfile">File of CSV data to be processed</label>
+				<input type="file" id="csvfile" name="csvfile">
+			</fieldset>
+			<br>
+			<div id="errorMsg"></div>
+			<br>
+			<fieldset>
+				<legend>Options</legend>
+				<label for="delim">Single character Delimiter (use "\t" for a tab) : </label> 
+				<input type="text" name="delim" id="delim" size="2" value=",">
+				<br><br>
+				<label>Where to process your request? </label>
+				<label for="local">Locally</label>
+				<input type="radio" name="runWhere" id="local"
+						value="local" checked='checked'>
+				<label for="srvr">Server</label>
+				<input type="radio" name="runWhere" id="srvr" value="srvr">
+				<br><br>column headers?
+			</fieldset>
+			<br>
+			<button type="submit" onkeypress="return checkSubmit(event)">Submit</button>
+		</form>
+		<br><br>
+		<fieldset>
+			<a href="docs/csv_design.html"> CSV design document</a>
+		</fieldset>
+		
+		<script src='src/csv.js'></script>
+		
+		<!--script type='module'>
+			import {csvToArray} from './csv.js';
+			window.csvToArray = csvToArray;
+		</script-->
+		<script>
+			// submit form if enter is pressed
+			function checkSubmit(e) {
+				
+				if (e && e.keyCode == 13 && 
+					document.getElementById('srvr').checked) {
+					{ document.forms[0].submit();}}
+				else {
+					window.genHTML = genHTMLgenHTML();
+					genHTML();
+				}
+			}
+			
+			// process request on the server or the client.
+			function genHTML() {
+				try {
+					// alert("CSV2HTML.html inline javascript at function genHTML");
+					var ex;
+
+					if (document.getElementById('srvr').checked) return true;
+					else {
+						var csvFile=document.getElementById("csvfile").files;
+						var delim = document.getElementById("delim").value;
+						if (delim==="\\t") delim='\t';
+						
+						var reader = new FileReader();
+						reader.readAsText(csvFile[0]);
+						reader.onload = function(e) { 
+							var csvArray=csvToArray(reader.result, delim);
+							console.log(csvArray);
+						/* 
+							var rsltwin = window.open("", "CSV Results",
+								"toolbar=yes, scrollbars=yes, resizable=yes," +
+								"top=100, left=800, width=400, height=400");
+							rsltwin.document.write(doPage(csvArray)); 
+						*/
+						};
+					}
+				} catch (ex) {
+					var tmp="Error: " + ex.name + " - " + ex.message;
+					alert(tmp);
+					console.error(tmp);
+				}
+				return false;
+			}
+		</script>
+	</body>
+</html>

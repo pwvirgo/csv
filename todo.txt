@@ -1,0 +1,16 @@
+todo
+
+midnight 10-31-2018 
+
+csv.js use saveChr() in all the functions rather than doing it directly as in newRowCellChr() and others
+
+csv.js array rslt has an empty first column - fix it!
+
+need to find a way to test csv.js on all cases
+
+01-11-2018
+
+starting to rewrite using cell, row, and table rather than
+table[row],[cell]
+
+all data is now being stored as character - need to include numbers!

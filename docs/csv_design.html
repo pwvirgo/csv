@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="en"><head>
+	<meta charset='utf-8'>
+	<meta name='description' content='a basic html shell'>
+	<meta name='keywords' content='search engine keyword'>
+	<title>CSV to HTML finite states</title>
+
+	<link rel="stylesheet" type="text/css" href="simple.css">
+</head>
+<body> 
+<h1>CSV to Array using a finite state machine</h1>
+<div>
+	<header>Rules for the CSV file</header>
+	<ul>
+		<li>The delimiter between cells must be a single character</li>
+		<li>If a cell starts with an odd number of quotes
+			it will be a "quoted cell" and must close the quotes to end the cell 
+		</li>
+		<li>Quotes can be included in a quoted cell - 2 consecutive quotes
+			are included in the cell contents as a single quote.</li>
+		<li>a quote may appear within a unquoted cell and will be treated
+			as a normal character</li>
+		
+		<li>New line will create a new row - unless it occurs with a
+			cell in quotes - it will then be included as a character
+			in that cell</li>
+		<li>Delimiters may be included within quoted cells</li>
+	</ul>
+</div>
+<hr>
+
+<header>Graphic of CSV Finite States</header>
+<p>The states are in circles. The edges point to the next state based
+on the character type in the CSV file. The edges are labeled with
+character type and the functions that are executed.</p>
+
+<img src="fsm.png" alt="fsm graphic" height="600" width="600">
+
+<div>
+	<header>The table of Events and States below shows the logic to parse
+		a CSV file using a “finite state machine”.</header>
+
+	<blockquote>
+	<p>The program begins in the newCell State.</p>
+	<p>The CSV file is processed one character at a time. Each character
+		is classified according to the “Events” column of the table.</p>
+	<ul>
+		<li>The event and state are indicate the row and column of the
+			relevant cell table</li>
+		<li><ul>
+			<li>the function(s) in that cell is called</li>
+			<li>the state is changed to the state in that cell</li>
+			</ul></li>
+		<li>The program completes when the entire file has been processed.</li>
+	</ul>
+	</blockquote>
+</div>
+
+<h1>this table is wrong - needs to match the graphic!</h1>
+
+<table>
+	<tbody>
+	<tr><th>Event</th><th colspan="4">State</th></tr>
+	<tr>
+		<th></th>
+		<th>newCell</th>
+		<th>inCell</th>
+		<th>inQcell</th>
+		<th>QQCell</th>
+	</tr><tr>
+		<th>text</th>
+		<td>saveChr()<hr>inCell</td> 
+		<td>saveChr()<hr>inCell</td>
+		<td>saveChr()<hr>inQcell</td>
+		<td>error()<hr>error</td>
+	</tr><tr>
+		<th>blank</th>
+		<td>{}<hr>newCell</td> 
+		<td>saveChr()<hr>inCell</td>
+		<td>saveChr()<hr>inQcell</td>
+		<td>{}<hr>limbo</td>
+	</tr><tr>
+		<th>quote</th>
+		<td>{}<hr>inQCell</td>
+		<td>saveChr()<hr>inCell</td>
+		<td>{}<hr>QQCell</td>
+		<td>saveChr()<hr>inQcell</td>
+	</tr><tr>
+		<th>delimt</th>
+		<td>saveCell()<hr>startCell<br></td>
+		<td>saveCell()<hr>startCell</td>
+		<td>saveChr()<hr>inQcell</td>
+		<td>saveCell()<hr>startCell</td>
+	</tr><tr>
+		<th>End of line</th>
+		<td>{}<hr>newCell<br></td>
+		<td>saveCell,saveRow()<hr>newCell</td>
+		<td>saveChr()<hr>inQcell</td>
+		<td>saveCell, saveRow()<hr>newCell</td>
+	</tr>
+</tbody></table>
+
+<p>The server logic, in tools/CsvParse.java, is working correctly. The local
+	logic is in the CVS2HTML.js file, and it may malfuction if certain
+	combinations of white space exist between delimiters and quoted cells
+</p>
+
+Designed and written in 2015 by Phil Virgo.
+
+</body></html>

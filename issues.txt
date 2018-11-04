@@ -1,0 +1,15 @@
+
+dev notes.
+- 1 ------------------------------
+I want: <input type="file" id="openFile" onchange="myFunction(event.target)>"
+
+I would like to write a function to read the file(s) that doesnot need
+to know the name of the html element from which it was called like
+
+     document.getElementById("openFile").addEventListener('change',
+	 function() {// an anonymous function I need to rewrite any time
+	              i want to use it!}
+-----------------------------
+- 2 ------------------------------
+
+unable to use modules from chrome browser
