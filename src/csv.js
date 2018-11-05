@@ -23,8 +23,7 @@ var state = {NEWCELL: 0, INCELL: 1, INQCELL: 2, QQCELL: 3};
 
 // the stateNames are here for use in debugging - not used in algorithm
 var stateNames=['NEWCELL', 'INCELL', 'INQCELL', 'QQCELL'];
-
-
+ 
 /* 2 dimensional array with rows indexed by events (chrType) and columns by state. 
  * Each cell contains a function and the next State
  */
