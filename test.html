@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="en"><head>
+	<meta charset='utf-8'>
+	<title>Testing arrayToHTML.genHTML</title>
+	<link rel="stylesheet" type="text/css" href="docs/simple.css">
+
+	</head>
+<body>
+	<h1>Testing arrayToHTML.genHTML</h1>
+	<h3>show csv finite state machine rules</h3>
+	<button id='ruleButton'>Show rules</button>
+
+	<div id='rules'></div>
+
+	<script src='src/arrayToHtml.js'></script>
+	<script src='src/csv.js'></script>
+
+	<script>
+		document.getElementById("ruleButton").addEventListener("click",
+			function(){
+    			document.getElementById("rules").innerHTML =
+				showRules();} )
+	</script>
+	<script>htmlTable(['the', 5, 'lovers']);</script>
+
+	
+</body>

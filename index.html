@@ -2,7 +2,7 @@
 <html lang="en"><head>
 	<meta charset='utf-8'>
 	<title>CSV to Array</title>
-	<link rel="stylesheet" type="text/css" href="../css/simple.css">
+	<link rel="stylesheet" type="text/css" href="docs/simple.css">
 
 	</head>
 	<body onkeypress="return checkSubmit(event)">
@@ -39,7 +39,7 @@
 		</fieldset>
 		
 		<script src='src/csv.js'></script>
-		
+		<script src='src/arrayToHtml.js'></script>
 		<!--script type='module'>
 			import {csvToArray} from './csv.js';
 			window.csvToArray = csvToArray;
@@ -74,6 +74,7 @@
 						reader.onload = function(e) { 
 							var csvArray=csvToArray(reader.result, delim);
 							console.log(csvArray);
+							htmlTable(csvArray[0]);
 						/* 
 							var rsltwin = window.open("", "CSV Results",
 								"toolbar=yes, scrollbars=yes, resizable=yes," +

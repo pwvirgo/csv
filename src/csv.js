@@ -1,6 +1,6 @@
 "use strict";
 
-/* Convert a string of CSV file data into a 2 dimensional JS array
+/* Convert a string of CSV file data into a 2 dimensional js array
  * Handles any number of quotes and line feeds embedded with a cell corecctly.
  * There is no meaningful error handling.
  *  
@@ -23,7 +23,8 @@ var state = {NEWCELL: 0, INCELL: 1, INQCELL: 2, QQCELL: 3};
 
 // the stateNames are here for use in debugging - not used in algorithm
 var stateNames=['NEWCELL', 'INCELL', 'INQCELL', 'QQCELL'];
- 
+
+
 /* 2 dimensional array with rows indexed by events (chrType) and columns by state. 
  * Each cell contains a function and the next State
  */
@@ -49,7 +50,7 @@ var fsmRules = [
 	],
 	[	// end of line
 		[eol, state.NEWCELL], [eol, state.NEWCELL],
-		[saveChr, state.INQCELL], [saveRow, state.NEWCELL]
+		[saveChr, state.INQCELL], [eol, state.NEWCELL]
 	]
 
 ];
@@ -151,7 +152,6 @@ function csvToArray(csv, delim) {
 	rule =	fsmRules[chrType.EOL][currState];
 	rule[0](); // execute the appropriate function
 
-	console.log(rslt);
-	
+	// console.log(rslt);
 	return rslt;
 }
