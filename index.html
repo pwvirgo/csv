@@ -33,6 +33,9 @@
 			<br>
 			<button type="submit" onkeypress="return checkSubmit(event)">Submit</button>
 		</form>
+		<hr>
+		<div id='showCSV'></div>
+		<hr>
 		<br><br>
 		<fieldset>
 			<a href="docs/csv_design.html"> CSV design document</a>
@@ -52,7 +55,6 @@
 					document.getElementById('srvr').checked) {
 					{ document.forms[0].submit();}}
 				else {
-					window.genHTML = genHTMLgenHTML();
 					genHTML();
 				}
 			}
@@ -74,7 +76,8 @@
 						reader.onload = function(e) { 
 							var csvArray=csvToArray(reader.result, delim);
 							console.log(csvArray);
-							htmlTable(csvArray[0]);
+							document.getElementById('showCSV').innerHTML=
+							htmlTable(csvArray);
 						/* 
 							var rsltwin = window.open("", "CSV Results",
 								"toolbar=yes, scrollbars=yes, resizable=yes," +

@@ -5,14 +5,24 @@
 
 var testdata = ['the', 5, 'green', 'leaves'];
 
-function htmlTable(myray) {
-	let tmp='';
 
-	for (let j=0; j < myray.length; j++ ) 
-		tmp = tmp.concat(myray[j] + ', ');
+/*  returns html table of a 1 or 2 dimensional array */
+function htmlTable(myray) {
+	let table='<table>\n';
+
+	for (let row=0; row < myray.length; row++) {
+		for (let col=0; col < myray[row].length; col++) {
+			table=table.concat('\t<td>' + myray[row][col] + '</td>\n');
+		}
+		table+='</tr>\n'
+	}
+	table+='</table>'
 	
-	console.log(tmp);
+	console.log(table);
+	return table;	
+
 }
+
 
 
 /*
