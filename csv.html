@@ -41,56 +41,40 @@
 			<a href="docs/csv_design.html"> CSV design document</a>
 		</fieldset>
 		
-		<script src='src/csv.js'></script>
+		<script src='src/Clsv.js'></script>
 		<script src='src/arrayToHtml.js'></script>
-		<!--script type='module'>
-			import {csvToArray} from './csv.js';
-			window.csvToArray = csvToArray;
-		</script-->
 		<script>
+
 			// submit form if enter is pressed
 			function checkSubmit(e) {
 				
-				if (e && e.keyCode == 13 && 
-					document.getElementById('srvr').checked) {
-					{ document.forms[0].submit();}}
-				else {
+				if (e && e.keyCode == 13) {
 					genHTML();
 				}
 			}
 			
 			// process request on the server or the client.
 			function genHTML() {
-				try {
+	//			try {
 					// alert("CSV2HTML.html inline javascript at function genHTML");
-					var ex;
-
-					if (document.getElementById('srvr').checked) return true;
-					else {
-						var csvFile=document.getElementById("csvfile").files;
-						var delim = document.getElementById("delim").value;
-						if (delim==="\\t") delim='\t';
-						
-						var reader = new FileReader();
-						reader.readAsText(csvFile[0]);
-						reader.onload = function(e) { 
-							var csvArray=csvToArray(reader.result, delim);
-							console.log(csvArray);
-							document.getElementById('showCSV').innerHTML=
-							htmlTable(csvArray);
-						/* 
-							var rsltwin = window.open("", "CSV Results",
-								"toolbar=yes, scrollbars=yes, resizable=yes," +
-								"top=100, left=800, width=400, height=400");
-							rsltwin.document.write(doPage(csvArray)); 
-						*/
-						};
-					}
-				} catch (ex) {
-					var tmp="Error: " + ex.name + " - " + ex.message;
-					alert(tmp);
-					console.error(tmp);
-				}
+					var reject;
+					var csvFile=document.getElementById("csvfile").files;
+					var delim = document.getElementById("delim").value;
+					if (delim==="\\t") delim='\t';
+					var csv = new Csv();	
+					var reader = new FileReader();
+					reader.readAsText(csvFile[0]);
+					reader.onload = function(e) { 
+						var csvArray=csv.toArray(reader.result, delim);
+						console.log(csvArray);
+						document.getElementById('showCSV').innerHTML=
+						htmlTable(csvArray);
+					};
+	//			} catch (ex) {
+	//				var tmp="Error: " + ex.name + " - " + ex.message;
+	//				alert(tmp);
+	//				console.error(tmp);
+	//			}
 				return false;
 			}
 		</script>
