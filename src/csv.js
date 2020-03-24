@@ -8,7 +8,10 @@
  * 
  *  pwvirgo  2018 */
 
-var debug = true;
+// var debug = true;
+// the stateNames are here for use in debugging - not used in algorithm
+var stateNames=['NEWCELL', 'INCELL', 'INQCELL', 'QQCELL'];
+i
 var currChr;		// object {current character, charType}
 var currCell;   	// the cell currently being processed
 var currRow;        // the row currently being processed
@@ -21,8 +24,6 @@ var chrType = {TEXT: 0, BLANK: 1, QUOTE: 2, DELIM: 3, EOL: 4};
 // state names are here mapped to column indexes of fsmRules
 var state = {NEWCELL: 0, INCELL: 1, INQCELL: 2, QQCELL: 3};
 
-// the stateNames are here for use in debugging - not used in algorithm
-var stateNames=['NEWCELL', 'INCELL', 'INQCELL', 'QQCELL'];
  
 /* 2 dimensional array with rows indexed by events (chrType) and columns by state. 
  * Each cell contains a function and the next State

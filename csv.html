@@ -6,8 +6,10 @@
 
 	</head>
 	<body onkeypress="return checkSubmit(event)">
-		<h1>Create an Array from a CSV file</h1>
-		
+		<div id="xxtitle">
+			<h1>Create an Array from a CSV file</h1>
+		</div>	
+		<div id="xxform">
 		<form action="/pvweb/tools/Csv2HtmlServlet" method="post"
 				enctype="multipart/form-data" onsubmit="return genHTML()">
 			<fieldset><legend>Select a CSV file to process</legend>
@@ -33,6 +35,8 @@
 			<br>
 			<button type="submit" onkeypress="return checkSubmit(event)">Submit</button>
 		</form>
+		</div>
+
 		<hr>
 		<div id='showCSV'></div>
 		<hr>
@@ -66,9 +70,9 @@
 					reader.readAsText(csvFile[0]);
 					reader.onload = function(e) { 
 						var csvArray=csv.toArray(reader.result, delim);
-						console.log(csvArray);
-						document.getElementById('showCSV').innerHTML=
-						htmlTable(csvArray);
+						document.getElementById("xxform").innerHTML="";
+						document.getElementById('showCSV').outerHTML=
+							htmlTable(csvArray);
 					};
 	//			} catch (ex) {
 	//				var tmp="Error: " + ex.name + " - " + ex.message;

@@ -13,11 +13,14 @@
 class Csv {
 	constructor() {
 		this.debug = true;
+		// the stateNames are used in documentation and debugging.
+		this.stateNames=["NEWCELL", "INCELL", "INQCELL", "QQCELL"];
+		
 		// object to hold the current character, type, and location in the source
-		this.currChr = {chr: '', type: null, cursor: 0};
+		this.currChr = {chr: "", type: null, cursor: 0};
 
-		this.currCell;   	// cell currently being processed
-		this.currRow;       // row currently being processed
+		this.currCell="";   	// cell currently being processed
+		this.currRow="";       // row currently being processed
 		this.delimit=",";	// csv delimiter - only single character delimiters will work
 		this.rslt = new Array();  // 2 dimensional array will hold the parsed rseults
 		
@@ -27,8 +30,6 @@ class Csv {
 		// state names are here mapped to column indexes of fsmRules
 		this.state = {NEWCELL: 0, INCELL: 1, INQCELL: 2, QQCELL: 3};
 	
-		// the stateNames are here for use in debugging - not used in algorithm
-		this.stateNames=['NEWCELL', 'INCELL', 'INQCELL', 'QQCELL'];
 		 
 		/* 2 dimensional array with rows indexed by events (chrType) and columns by state. 
 		 * Each cell contains a function and the next State
@@ -71,14 +72,14 @@ class Csv {
 		switch (s) {
 			case '"':	return this.chrType.QUOTE;
 			case this.delimit : return this.chrType.DELIM;
-			case ' ': 
-			case '\t':	return this.chrType.BLANK;
-			case '\n':	return this.chrType.EOL;
+			case " ": 
+			case "\t":	return this.chrType.BLANK;
+			case "\n":	return this.chrType.EOL;
 			default :	return this.chrType.TEXT;
 		}
 	}
 	
-	error() {console.log('ERROR!');}
+	error() {console.log("ERROR!");}
 	
 	// return the next character - if there is not another character return null
 	nextChr(source, chrp) {
@@ -104,9 +105,9 @@ class Csv {
 	}
 	
 	saveCell(csx) {
-		//if (debug) console.log('saving cell: ' + this.currCell);
+		//if (debug) console.log("saving cell: " + this.currCell);
 		csx.currRow.push(csx.currCell);
-		csx.currCell = '';
+		csx.currCell = "";
 	}
 	
 	saveChr(csx) {
